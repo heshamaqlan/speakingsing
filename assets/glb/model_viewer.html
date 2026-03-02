@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+    </script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      model-viewer {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <model-viewer id="viewer"
+      src="assets/glb/charcter_human9.glb"
+      autoplay
+      animation-name="Iam"
+      camera-controls>
+    </model-viewer>
+
+    <script>
+      const viewer = document.getElementById('viewer');
+
+      function playAnimation(name) {
+        viewer.animationName = name;
+        viewer.play();
+      }
+    </script>
+
+  </body>
+</html>
