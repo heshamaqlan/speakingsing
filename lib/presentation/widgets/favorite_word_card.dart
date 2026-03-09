@@ -17,13 +17,13 @@ class FavoriteWordCard extends StatefulWidget {
   final String text;
   final bool enableFlowAnimation;
 
-  /// Animation speed (higher = faster)
+
   final double animationSpeed;
 
-  /// Gradient colors for the animated border
+
   final List<Color> gradientColors;
 
-  /// Glow intensity when focused
+
   final double glowIntensity;
 
   final bool isSelected;
@@ -46,13 +46,12 @@ class _FavoriteWordCardState extends State<FavoriteWordCard>
   void initState() {
     super.initState();
 
-    // Flow animation controller - continuous rotation
     flowController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: (2000 / widget.animationSpeed).round()),
     )..repeat();
 
-    // Focus animation controller
+  
     focusController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),

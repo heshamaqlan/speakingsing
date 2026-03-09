@@ -11,7 +11,6 @@ class DictionaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize controller
     Get.put(DictionaryController());
 
     final colors = Theme.of(context).extension<AppColors>()!;

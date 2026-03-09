@@ -3,27 +3,24 @@ import 'package:get/get.dart';
 import 'package:speaking_sign/controller/favorite/favoritewordscontroller.dart';
 import 'package:speaking_sign/presentation/widgets/favorite_word_card.dart';
 
-class FavoriteWordsListView extends GetView<FavoriteWordsController> {
+class FavoriteWordsListView extends StatelessWidget {
   const FavoriteWordsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // حقن الـ Controller إذا لم يكن محقوناً مسبقاً في الـ Binding
-    final controller = Get.put(FavoriteWordsController());
+    final controller = Get.find<FavoriteWordsController>();
 
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: controller.favoriteWords.length,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, index) {
-        // ملاحظة: استبدلت animations.keys بـ favoriteWords لأن animations لم تكن معرفة في الكود المرسل
-        // إذا كنت تعتمد على animations، يمكننا نقلها أيضاً للـ controller
-        final word = controller.favoriteWords[index];
+    return Obx(
+      () => ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: controller.favoriteWords.length,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          final word = controller.favoriteWords[index];
 
-        return GestureDetector(
-          onTap: () => controller.selectWord(index, word, context),
-          child: Obx(
-            () => AnimatedContainer(
+          return GestureDetector(
+            onTap: () => controller.selectWord(index, word, context),
+            child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               child: FavoriteWordCard(
                 isSelected: controller.currentItemIndex.value == index,
@@ -36,9 +33,9 @@ class FavoriteWordsListView extends GetView<FavoriteWordsController> {
                 glowIntensity: 0.3,
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

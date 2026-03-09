@@ -1,6 +1,9 @@
 // no controller
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:speaking_sign/config/theme/app_colors.dart';
+import 'package:speaking_sign/controller/settings/settings_controller.dart';
 import 'package:speaking_sign/data/models/settings_item_model.dart';
 import 'package:speaking_sign/presentation/screens/settings/dashboard/add_animation_view.dart';
 import 'package:speaking_sign/presentation/screens/settings/select_theme_dialog.dart';
@@ -8,12 +11,12 @@ import 'package:speaking_sign/presentation/screens/settings/speed_management_bot
 import 'package:speaking_sign/presentation/widgets/setting_item_card.dart';
 
 class SettingsItemsListView extends StatelessWidget {
-  const SettingsItemsListView({super.key});
+  SettingsItemsListView({super.key});
+  final SettingsController controller = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<AppColors>()!;
-
     List<SettingsItemModel> settingItems = [
       SettingsItemModel(
         title: 'مظهر التطبيق',
@@ -86,7 +89,13 @@ class SettingsItemsListView extends StatelessWidget {
         icon: Icons.notifications_rounded,
       ),
       SettingsItemModel(title: 'اللغة', icon: Icons.language_rounded),
-      SettingsItemModel(title: 'حول التطبيق', icon: Icons.info_rounded),
+      SettingsItemModel(
+        title: 'حول التطبيق',
+        icon: Icons.info_rounded,
+        onTap: () {
+          controller.navigateToAboutView();
+        },
+      ),
       SettingsItemModel(
         title: 'مشاركة التطبيق',
         icon: Icons.share_rounded,

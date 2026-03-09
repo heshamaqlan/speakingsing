@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:speaking_sign/config/theme/theme_controller/theme_controller.dart';
+import 'package:speaking_sign/presentation/screens/settings/About_App/about_view.dart';
+import 'package:speaking_sign/routes/app_routes.dart';
 
 class SettingsController extends GetxController {
-  // --- Speed Management State ---
   var speedValue = 0.5.obs;
   var isCheckedCamera = true.obs;
   var isCheckedPlay = true.obs;
@@ -25,7 +26,11 @@ class SettingsController extends GetxController {
     isCheckedRotate.value = value;
   }
 
-  // --- Theme Selection State for Dialog ---
+  void navigateToAboutView() {
+    Get.toNamed(AppRoutes.ABOUTAPP);
+    print("hesham hesham hesham hesham *******");
+  }
+
   var selectedThemeIndex = 0.obs;
 
   @override

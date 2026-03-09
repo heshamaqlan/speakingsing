@@ -5,6 +5,7 @@ import 'package:speaking_sign/config/theme/app_colors.dart';
 import 'package:speaking_sign/controller/transulate/translate_controller.dart';
 import 'package:speaking_sign/presentation/screens/transulate/the_model_viewer.dart';
 import 'package:speaking_sign/presentation/widgets/animated_border_text_field.dart';
+import 'package:speaking_sign/presentation/widgets/public/custom_top_header2.dart';
 
 class CustomModelView extends StatelessWidget {
   CustomModelView({super.key});
@@ -16,6 +17,7 @@ class CustomModelView extends StatelessWidget {
     final colors = Theme.of(context).extension<AppColors>()!;
     return Column(
       children: [
+        CustomTopHeader2(text: "ترجــــمة الاشــــــارة"),
         Expanded(flex: 1, child: SizedBox(height: 32)),
         Expanded(flex: 6, child: TheModelViewer(hasFavBtn: true)),
         SizedBox(height: 6),
@@ -69,7 +71,7 @@ class CustomModelView extends StatelessWidget {
                           // The logic here handles itself via controller's listener
                         },
                         controller: controller.textController,
-                        animationSpeed: 0.5,
+                        // animationSpeed: 0.5,
                       ),
                     ),
                   ],

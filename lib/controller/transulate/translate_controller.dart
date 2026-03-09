@@ -17,7 +17,8 @@ class TranslateController extends GetxController {
 
   WebViewController? webViewController;
 
-  final animations = {"انا": "Iam", "الان": "ActionNow", "مرحبا": ""};
+  // القاموس الذي يربط الكلمات العربية بأسماء الأنميشن
+  final animations = {"انا": "iam", "الان": "now", "مرحبا": "Hello"};
 
   @override
   void onInit() {
@@ -33,13 +34,20 @@ class TranslateController extends GetxController {
     super.onClose();
   }
 
+  // دالة مراقبة تغير النص وتفعيل الحركة
   void _onTextChanged() {
-    if (animations.containsKey(textController.text)) {
-      currentAnimation.value = animations[textController.text]!;
-      setAnimation(currentAnimation.value);
+    String text = textController.text.trim();
+    if (animations.containsKey(text)) {
+      String animationName = animations[text]!;
+      // تشغيل الحركة فقط إذا كانت مختلفة عن الحركة الحالية أو إذا كان النموذج متوقفاً
+      if (currentAnimation.value != animationName || !isPlaying.value) {
+        currentAnimation.value = animationName;
+        setAnimation(animationName);
+      }
     }
   }
 
+  // دالة التحكم في الصوت
   void listen() async {
     if (!isListening.value) {
       bool available = await speech.initialize();
@@ -60,10 +68,24 @@ class TranslateController extends GetxController {
     }
   }
 
+  // تعديل: زر التشغيل/الإيقاف يتحكم الآن في الـ WebView مباشرة
   void togglePlay() {
+    if (webViewController == null) return;
+
     isPlaying.value = !isPlaying.value;
+
+    if (isPlaying.value) {
+      webViewController!.runJavaScript(
+        "document.querySelector('#model-viewer').play();",
+      );
+    } else {
+      webViewController!.runJavaScript(
+        "document.querySelector('#model-viewer').pause();",
+      );
+    }
   }
 
+  // تبديل حالة الكاميرا
   void toggleCamera() {
     cameraEnabled.value = !cameraEnabled.value;
   }
@@ -78,18 +100,23 @@ class TranslateController extends GetxController {
 
   void setWebViewController(WebViewController controller) {
     webViewController = controller;
-    Future.delayed(const Duration(milliseconds: 300), () {
-      setAnimation(currentAnimation.value);
-    });
+    if (currentAnimation.value.isNotEmpty) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        setAnimation(currentAnimation.value);
+      });
+    }
   }
 
   void setAnimation(String name) {
-    if (webViewController == null) return;
+    if (webViewController == null || name.isEmpty) return;
+
+    isPlaying.value = true;
 
     webViewController!.runJavaScript("""
-      const mv = document.querySelector('#model-viewer');
-      mv.animationName = "$name";
-      mv.play();
-    """);
+    const mv = document.querySelector('#model-viewer');
+    mv.animationName = "$name";
+    mv.currentTime = 0; // إعادة الحركة للبداية (ثانية 0)
+    mv.play();
+  """);
   }
 }

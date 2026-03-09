@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:speaking_sign/config/theme/app_colors.dart';
 import 'package:speaking_sign/controller/transulate/translate_controller.dart';
-import 'package:speaking_sign/presentation/screens/transulate/custom_speed_counter.dart';
 
 class TheModelViewer extends StatelessWidget {
   TheModelViewer({super.key, this.borderColor, required this.hasFavBtn});
@@ -16,6 +15,7 @@ class TheModelViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<AppColors>()!;
+
     return Stack(
       children: [
         Container(
@@ -23,30 +23,32 @@ class TheModelViewer extends StatelessWidget {
             border: Border.all(color: borderColor ?? colors.wordCardText!),
             borderRadius: BorderRadius.circular(10),
           ),
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Obx(
               () => ModelViewer(
-                src: 'assets/glb/charcter_human9.glb',
+                src: 'assets/glb/new_charcter2.glb',
                 alt: 'Custom Model',
                 id: 'model-viewer',
                 backgroundColor: Colors.transparent,
-                animationName: controller.currentAnimation.value,
+
                 autoRotate: false,
                 cameraControls: controller.cameraEnabled.value,
-                autoPlay: controller.isPlaying.value,
+
                 shadowIntensity: 1.0,
                 shadowSoftness: 0.0,
                 exposure: 1.0,
+
                 cameraOrbit: "0deg 90deg auto",
                 minCameraOrbit: "auto 90deg auto",
                 maxCameraOrbit: "auto 90deg auto",
+
                 animationCrossfadeDuration: 500,
+
                 onWebViewCreated: (webViewController) {
                   controller.setWebViewController(webViewController);
                 },
-                key: ValueKey(controller.currentAnimation.value),
               ),
             ),
           ),
@@ -71,12 +73,6 @@ class TheModelViewer extends StatelessWidget {
 
         Positioned(
           bottom: 40,
-          right: 40,
-          child: CustomSpeedCounter(colors: colors),
-        ),
-
-        Positioned(
-          bottom: 40,
           left: 40,
           child: Column(
             children: [
@@ -97,7 +93,7 @@ class TheModelViewer extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               CircleAvatar(
                 backgroundColor: colors.navigaionBar,
                 radius: 25,

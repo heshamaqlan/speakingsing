@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:speaking_sign/config/constants/constants.dart';
 import 'package:speaking_sign/config/theme/app_colors.dart';
+import 'package:speaking_sign/controller/favorite/favoritewordscontroller.dart';
 import 'package:speaking_sign/controller/transulate/translate_controller.dart';
 import 'package:speaking_sign/presentation/screens/transulate/the_model_viewer.dart';
 import 'package:speaking_sign/presentation/screens/word_detaile/word_detaile_page_header.dart';
 
 class WordDetaileView extends StatelessWidget {
-  const WordDetaileView({super.key});
+  WordDetaileView({super.key});
 
   static String routeName = '/wordDetaile';
-
+  final favoriteController = Get.find<FavoriteWordsController>();
   @override
   Widget build(BuildContext context) {
-    // We use TranslateController since it already handles 3D model logic.
     final TranslateController controller = Get.put(TranslateController());
 
     final key = ModalRoute.of(context)!.settings.arguments as String;
     var value = animations[key];
 
-    // Set the initial animation for the view
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (value != null) {
         controller.currentAnimation.value = value;
@@ -53,6 +52,21 @@ class WordDetaileView extends StatelessWidget {
                       SizedBox(height: 16),
                       Row(
                         children: [
+                          // IconButton(
+                          //   padding: EdgeInsets.all(12),
+                          //   style: ButtonStyle(
+                          //     backgroundColor: MaterialStatePropertyAll(
+                          //       colors.wordCard,
+                          //     ),
+                          //   ),
+                          //   alignment: Alignment.center,
+                          //   onPressed: () {},
+                          //   icon: Icon(
+                          //     Icons.favorite,
+                          //     color: colors.wordCardIcon,
+                          //     size: 32,
+                          //   ),
+                          // ),
                           IconButton(
                             padding: EdgeInsets.all(12),
                             style: ButtonStyle(
@@ -61,7 +75,9 @@ class WordDetaileView extends StatelessWidget {
                               ),
                             ),
                             alignment: Alignment.center,
-                            onPressed: () {},
+                            onPressed: () {
+                              favoriteController.addFavoriteWord(key);
+                            },
                             icon: Icon(
                               Icons.favorite,
                               color: colors.wordCardIcon,

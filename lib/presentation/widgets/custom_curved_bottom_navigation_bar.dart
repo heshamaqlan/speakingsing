@@ -5,7 +5,7 @@ import 'package:speaking_sign/config/theme/app_colors.dart';
 import 'package:speaking_sign/controller/navigation/navigation_controller.dart';
 import 'package:speaking_sign/presentation/screens/dictionary/dictionary_view.dart';
 import 'package:speaking_sign/presentation/screens/favorite/favorite_view.dart';
-import 'package:speaking_sign/presentation/screens/home/home_view.dart';
+import 'package:speaking_sign/presentation/screens/Keyboard/key_view.dart';
 import 'package:speaking_sign/presentation/screens/settings/settings_view.dart';
 import 'package:speaking_sign/presentation/screens/transulate/transulate_view.dart';
 
@@ -54,7 +54,7 @@ class CustomCurvedBottomNavigationBar extends StatelessWidget {
                     : inactiveColor,
           ),
           Icon(
-            Icons.home_rounded,
+            Icons.keyboard_alt_rounded,
             size: 30,
             color:
                 controller.currentIndex.value == 2
